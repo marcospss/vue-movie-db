@@ -1,0 +1,23 @@
+<template>
+  <v-app-bar dense app flat>
+    <v-app-bar-nav-icon class="hidden-md-and-up" />
+    <v-container class="mx-auto py-0">
+      <v-row align="center">
+        <v-toolbar-title>The Movie Database (TMDb)</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn text to="/" exact class="hidden-sm-and-down">
+          <v-icon left>mdi-home</v-icon>
+          Home
+        </v-btn>
+        <v-btn text to="/discover" class="hidden-sm-and-down">
+          <v-icon left>mdi-file-find</v-icon>
+          Discover
+        </v-btn>
+        <v-btn text to="/favorites" class="hidden-sm-and-down">
+          <v-icon left>mdi-heart</v-icon>
+          Favorites
+        </v-btn>
+      </v-row>
+    </v-container>
+  </v-app-bar>
+</template>
