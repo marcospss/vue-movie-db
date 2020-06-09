@@ -1,12 +1,17 @@
 <template>
   <div id="home">
-    <h1>This is an Home page</h1>
+    <Carousel />
+    <NowPlaying />
   </div>
 </template>
 <script>
-
+import Carousel from "@/components/home/Carousel";
+import NowPlaying from "@/components/home/NowPlaying";
 export default {
   name: "Home",
-  components: {}
+  components: {
+    Carousel,
+    NowPlaying
+  }
 };
 </script>

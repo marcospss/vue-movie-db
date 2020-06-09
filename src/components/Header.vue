@@ -17,6 +17,14 @@
           <v-icon left>mdi-heart</v-icon>
           Favorites
         </v-btn>
+        <v-text-field
+          append-icon="mdi-magnify"
+          flat
+          hide-details
+          solo-inverted
+          class="hidden-sm-and-down ml-6"
+          label="Search"
+        />
       </v-row>
     </v-container>
   </v-app-bar>
