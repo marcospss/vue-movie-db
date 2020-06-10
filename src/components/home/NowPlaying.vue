@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12">
         <MediaList>
-          <h2 class="title">Now Playing</h2>
+          <h2 class="title font-weight-medium text-uppercase">Now Playing</h2>
         </MediaList>
       </v-col>
     </v-row>

@@ -6,10 +6,12 @@
           <v-card class="mx-auto" max-width="90%" elevation="0">
             <v-list-item class="pa-0">
               <v-list-item-content>
-                <v-list-item-title class="headline">
+                <v-list-item-title
+                  class="headline font-weight-medium text-uppercase"
+                >
                   {{ media.title }}
                 </v-list-item-title>
-                <v-list-item-subtitle>{{
+                <v-list-item-subtitle class="font-weight-black">{{
                   toDateString(media.release_date)
                 }}</v-list-item-subtitle>
               </v-list-item-content>
@@ -23,6 +25,7 @@
               min-height="250"
               max-height="250"
               position="center top"
+              :alt="media.title"
             >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -33,7 +36,9 @@
                 </v-row>
               </template>
             </v-img>
-            <v-card-text class="px-0">{{ media.overview }} </v-card-text>
+            <v-card-text class="px-0 title-box">{{
+              media.overview
+            }}</v-card-text>
             <v-card-actions class="px-0">
               <v-btn
                 text
@@ -65,8 +70,10 @@ export default {
   },
   methods: {
     getPathImage(image) {
-      const imagePath = `${imageApi.secure_base_url}/${imageApi.backdrop_sizes.w780}`;
-      return `${imagePath}${image}`;
+      const imagePath = `${imageApi.secure_base_url}${imageApi.backdrop_sizes.w780}`;
+      return image
+        ? `${imagePath}${image}`
+        : "@/assets/images/movie-theater.jpg";
     },
     toDateString(releaseDate) {
       const date = new Date(releaseDate);
@@ -75,3 +82,9 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.title-box {
+  min-height: 100px;
+  max-height: 100px;
+}
+</style>

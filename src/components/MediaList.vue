@@ -4,18 +4,11 @@
       <slot />
     </v-col>
     <v-row>
-      <CardLandscape />
-      <CardLandscape />
-      <CardLandscape />
-      <CardLandscape />
-      <CardLandscape />
-      <CardLandscape />
-      <CardLandscape />
-      <CardLandscape />
-      <CardLandscape />
-      <CardLandscape />
-      <CardLandscape />
-      <CardLandscape />
+      <CardLandscape
+        v-for="media in listMedia.results"
+        :key="media.id"
+        :media="media"
+      />
     </v-row>
   </v-container>
 </template>
@@ -23,13 +16,17 @@
 import CardLandscape from "@/components/CardLandscape";
 export default {
   name: "MediaList",
-
+  props: {
+    listMedia: {
+      type: Object,
+      default: () => [],
+      required: true
+    }
+  },
   components: {
     CardLandscape
   },
 
-  data: () => ({
-    //
-  })
+  data: () => ({})
 };
 </script>
