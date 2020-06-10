@@ -25,3 +25,9 @@ export default {
   })
 };
 </script>
+<style lang="scss">
+body {
+  background: url(./assets/images/movie-theater.jpg) no-repeat center top;
+  background-size: 100% 100%;
+}
+</style>

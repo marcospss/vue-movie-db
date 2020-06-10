@@ -1,36 +1,44 @@
 <template>
   <v-carousel hide-delimiter-background show-arrows-on-hover>
-    <v-carousel-item v-for="(slide, i) in slides" :key="i">
+    <v-carousel-item v-for="media in listMedia" :key="media.id">
       <v-sheet>
         <v-row align="center" justify="center">
-          <!-- <v-img style="position: absolute" :src="slide" contain></v-img> -->
           <v-card class="mx-auto" max-width="90%" elevation="0">
             <v-list-item class="pa-0">
               <v-list-item-content>
                 <v-list-item-title class="headline">
-                  Justice League Dark: Apokolips War
+                  {{ media.title }}
                 </v-list-item-title>
-                <v-list-item-subtitle>May 15, 2020</v-list-item-subtitle>
+                <v-list-item-subtitle>{{
+                  toDateString(media.release_date)
+                }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-img
-              :src="slide"
-              max-height="220"
-              alt="Justice League Dark: Apokolips War"
-            ></v-img>
-            <v-card-text class="px-0">
-              Earth is decimated after intergalactic tyrant Darkseid has
-              devastated the Justice League in a poorly executed war by the DC
-              Super Heroes. Now the remaining bastions of good – the Justice
-              League, Teen Titans, Suicide Squad and assorted others – must
-              regroup, strategize and take the war to Darkseid in order to save
-              the planet and its surviving inhabitants.
-            </v-card-text>
+              :src="getPathImage(media.backdrop_path)"
+              lazy-src="@/assets/images/movie-theater.jpg"
+              aspect-ratio="1"
+              class="grey lighten-2"
+              max-width="100%"
+              min-height="250"
+              max-height="250"
+              position="center top"
+            >
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
+            <v-card-text class="px-0">{{ media.overview }} </v-card-text>
             <v-card-actions class="px-0">
               <v-btn
                 text
                 color="accent-4"
-                :to="{ name: 'Details', params: { id: 1000 } }"
+                :to="{ name: 'Details', params: { id: media.id } }"
               >
                 Read More
               </v-btn>
@@ -45,19 +53,25 @@
   </v-carousel>
 </template>
 <script>
+import imageApi from "@/settings/imageApi";
 export default {
   name: "Carousel",
-  data() {
-    return {
-      slides: [
-        "https://image.tmdb.org/t/p/w780/sQkRiQo3nLrQYMXZodDjNUJKHZV.jpg",
-        "https://image.tmdb.org/t/p/w780/A7xO8NpdS7fbBKGmh84HbSD21OJ.jpg",
-        "https://image.tmdb.org/t/p/w780/5dsF3qgRNAFBfc7F388sy1lBiCd.jpg",
-        "https://image.tmdb.org/t/p/w780/do4q8TPJYDNf4sJTuCBVEmm597l.jpg",
-        "https://image.tmdb.org/t/p/w780/5dsF3qgRNAFBfc7F388sy1lBiCd.jpg",
-        "https://image.tmdb.org/t/p/w780/wRreALASTO4nXsrJKTwqTLyNjal.jpg"
-      ]
-    };
+  props: {
+    listMedia: {
+      type: Array,
+      default: () => [],
+      required: true
+    }
+  },
+  methods: {
+    getPathImage(image) {
+      const imagePath = `${imageApi.secure_base_url}/${imageApi.backdrop_sizes.w780}`;
+      return `${imagePath}${image}`;
+    },
+    toDateString(releaseDate) {
+      const date = new Date(releaseDate);
+      return date.toDateString();
+    }
   }
 };
 </script>
