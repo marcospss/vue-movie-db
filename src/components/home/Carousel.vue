@@ -59,6 +59,7 @@
 </template>
 <script>
 import imageApi from "@/settings/imageApi";
+import placeholder from "@/assets/images/movie-theater.jpg";
 export default {
   name: "Carousel",
   props: {
@@ -71,9 +72,7 @@ export default {
   methods: {
     getPathImage(image) {
       const imagePath = `${imageApi.secure_base_url}${imageApi.backdrop_sizes.w780}`;
-      return image
-        ? `${imagePath}${image}`
-        : "@/assets/images/movie-theater.jpg";
+      return image ? `${imagePath}${image}` : placeholder;
     },
     toDateString(releaseDate) {
       const date = new Date(releaseDate);

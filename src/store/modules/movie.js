@@ -22,24 +22,33 @@ const movie = {
       state.isFirstLoad = true;
     },
     [MOVIE.GET_NOW_PLAYING_LIST](state, data) {
+      const currentResults = state.nowPlaying.results || [];
       state.nowPlaying = data;
+      state.nowPlaying.results = [...currentResults, ...data.results];
     }
   },
   actions: {
     async getPopularAction({ commit }) {
       const response = await movieService.popular();
-      const results = response && response.data && response.data.results;
-      commit(MOVIE.GET_POPULAR_LIST, results);
+      const data = response && response.data && response.data.results;
+      commit(MOVIE.GET_POPULAR_LIST, data);
     },
-    async getNowPlaying({ commit }) {
-      const response = await movieService.nowPlaying();
-      const results = response && response.data && response.data;
-      commit(MOVIE.GET_NOW_PLAYING_LIST, results);
+    async getNowPlaying({ commit, state }) {
+      const nextPage = state.nowPlaying.page
+        ? parseInt(state.nowPlaying.page, 10) + 1
+        : 1;
+      const response = await movieService.nowPlaying(nextPage);
+      const data = response && response.data && response.data;
+      commit(MOVIE.GET_NOW_PLAYING_LIST, data);
     }
   },
   getters: {
     popular: state => state.popular,
     nowPlaying: state => state.nowPlaying,
+    nowPlayingShowLoadMore: state => {
+      const { page, total_pages } = state.nowPlaying;
+      return page < total_pages;
+    },
     isFirstLoad: state => state.isFirstLoad
   }
 };

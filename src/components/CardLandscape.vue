@@ -21,16 +21,14 @@
           </v-row>
         </template>
       </v-img>
-      <v-card-title class="text-break title-box">{{ media.title }}</v-card-title>
+      <v-card-title class="text-break title-box">{{
+        media.title
+      }}</v-card-title>
       <v-card-subtitle class="pb-0 font-weight-black">{{
         toDateString(media.release_date)
       }}</v-card-subtitle>
       <v-card-actions>
-        <v-btn
-          text
-          color="accent-4"
-          :to="{ name: 'Details', params: { id: media.id } }"
-        >
+        <v-btn text :to="{ name: 'Details', params: { id: media.id } }">
           Read More
         </v-btn>
       </v-card-actions>
@@ -39,6 +37,7 @@
 </template>
 <script>
 import imageApi from "@/settings/imageApi";
+import placeholder from "@/assets/images/movie-theater.jpg";
 export default {
   name: "CardLandscape",
   props: {
@@ -50,8 +49,8 @@ export default {
   },
   methods: {
     getPathImage(image) {
-      const imagePath = `${imageApi.secure_base_url}${imageApi.backdrop_sizes.w300}`;
-      return `${imagePath}${image}`;
+      const imagePath = `${imageApi.secure_base_url}${imageApi.backdrop_sizes.w780}`;
+      return image ? `${imagePath}${image}` : placeholder;
     },
     toDateString(releaseDate) {
       const date = new Date(releaseDate);
