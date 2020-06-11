@@ -40,11 +40,7 @@
               media.overview
             }}</v-card-text>
             <v-card-actions class="px-0">
-              <v-btn
-                text
-                color="accent-4"
-                :to="{ name: 'Details', params: { id: media.id } }"
-              >
+              <v-btn text :to="{ name: 'Details', params: { id: media.id } }">
                 Read More
               </v-btn>
               <v-btn icon>
@@ -58,8 +54,8 @@
   </v-carousel>
 </template>
 <script>
-import imageApi from "@/settings/imageApi";
-import placeholder from "@/assets/images/movie-theater.jpg";
+import formatContentMixin from "@/mixins/formatContentMixin";
+
 export default {
   name: "Carousel",
   props: {
@@ -69,16 +65,7 @@ export default {
       required: true
     }
   },
-  methods: {
-    getPathImage(image) {
-      const imagePath = `${imageApi.secure_base_url}${imageApi.backdrop_sizes.w780}`;
-      return image ? `${imagePath}${image}` : placeholder;
-    },
-    toDateString(releaseDate) {
-      const date = new Date(releaseDate);
-      return date.toDateString();
-    }
-  }
+  mixins: [formatContentMixin]
 };
 </script>
 <style lang="scss" scoped>

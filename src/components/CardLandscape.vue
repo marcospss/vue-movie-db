@@ -36,8 +36,8 @@
   </v-col>
 </template>
 <script>
-import imageApi from "@/settings/imageApi";
-import placeholder from "@/assets/images/movie-theater.jpg";
+import formatContentMixin from "@/mixins/formatContentMixin";
+
 export default {
   name: "CardLandscape",
   props: {
@@ -47,16 +47,7 @@ export default {
       required: true
     }
   },
-  methods: {
-    getPathImage(image) {
-      const imagePath = `${imageApi.secure_base_url}${imageApi.backdrop_sizes.w780}`;
-      return image ? `${imagePath}${image}` : placeholder;
-    },
-    toDateString(releaseDate) {
-      const date = new Date(releaseDate);
-      return date.toDateString();
-    }
-  }
+  mixins: [formatContentMixin]
 };
 </script>
 <style lang="scss" scoped>

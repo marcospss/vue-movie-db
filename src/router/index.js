@@ -4,6 +4,8 @@ import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
+const parseProps = routerObject => ({ id: parseInt(routerObject.params.id) });
+
 const routes = [
   {
     path: "/",
@@ -13,7 +15,7 @@ const routes = [
   {
     path: "/details/:id",
     name: "Details",
-    props: true,
+    props: parseProps,
     component: () =>
       import(/* webpackChunkName: "details" */ "../views/Details.vue")
   },
@@ -25,7 +27,7 @@ const routes = [
   },
   {
     path: "/discover",
-    name: "discover",
+    name: "Discover",
     component: () =>
       import(/* webpackChunkName: "discover" */ "../views/Discover.vue")
   }
@@ -34,6 +36,9 @@ const routes = [
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
   routes
 });
 

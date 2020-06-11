@@ -1,13 +1,28 @@
 <template>
   <v-container>
+    <Loader :isLoading="isLoading" />
     <v-card max-width="100%" max-height="100%" class="mt-5">
       <v-img
-        src="https://image.tmdb.org/t/p/w780/maa4191Pfvs3SGR3ECYC34kaRGQ.jpg"
-        alt="Doctor Strange"
+        :src="getPathImage(details.backdrop_path)"
+        lazy-src="@/assets/images/movie-theater.jpg"
+        position="center top"
+        min-height="560"
+        max-height="560"
+        :alt="details.title"
       >
+        <template v-slot:placeholder>
+          <v-row class="fill-height ma-0" align="center" justify="center">
+            <v-progress-circular
+              indeterminate
+              color="grey lighten-5"
+            ></v-progress-circular>
+          </v-row>
+        </template>
+        <v-btn :to="{ name: 'Home' }" large>
+          <v-icon left>mdi-backspace</v-icon> Back Home
+        </v-btn>
         <v-row class="fill-height pa-5" align="center">
-          <v-col cols="12" md="7" offset-xs="0" offset-md="5" offset="0">
-            <v-divider></v-divider>
+          <v-col cols="12" md="8" offset-xs="0" offset-md="4" offset="0">
             <v-sheet
               cols="12"
               md="7"
@@ -15,44 +30,107 @@
               style="background-color: #1e1e1e9a"
             >
               <h1 class="display-3 font-weight-light mt-6">
-                Doctor Strange
+                {{ details.title }}
               </h1>
-              <div class="subtitle-1 mt-2">
-                Action | Adventure | Fantasy | Science Fiction
+              <div class="subtitle-1 mt-2 d-flex">
+                <span>
+                  <v-icon left>mdi-calendar</v-icon>
+                  {{ toDateString(details.release_date) }}
+                </span>
+                <span class="ml-5">
+                  <v-icon left>mdi-clock</v-icon>
+                  {{ convertMinutesToTime(details.runtime) }}
+                </span>
               </div>
-              <v-row align="center" class="mx-0 pb-4">
+              <div class="subtitle-1">
+                {{ genresList(details.genres) }}
+              </div>
+              <v-row align="center" class="mx-0 mb-4">
                 <v-rating
-                  :value="4.5"
+                  :value="details.vote_average"
                   color="amber"
                   dense
                   half-increments
                   readonly
                   size="14"
                 ></v-rating>
-                <div class="grey--text ml-4">4.5 (413)</div>
+                <div class="ml-4">
+                  {{ details.vote_average }} ({{ details.vote_count }})
+                </div>
               </v-row>
               <div class="subheading text-uppercase mb-6">
-                After his career is destroyed, a brilliant but arrogant surgeon
-                gets a new lease on life when a sorcerer takes him under her
-                wing and trains him to defend the world against evil.
+                {{ details.overview }}
               </div>
             </v-sheet>
-            <v-divider></v-divider>
           </v-col>
         </v-row>
       </v-img>
     </v-card>
-    <Recommendations />
+    <Recommendations :listMedia="recommendations" />
+    <v-divider></v-divider>
+    <v-row v-if="recommendationsShowLoadMore">
+      <v-col cols="12" md="4" align="end" justify="center" class="">
+        Page: {{ recommendations.page }}
+      </v-col>
+      <v-col cols="12" md="4" align="center" justify="center" class="">
+        <v-btn text @click="loadRecommendations(id)">
+          Load More
+        </v-btn>
+      </v-col>
+      <v-col cols="12" md="4" align="start" justify="start" class="">
+        Total Pages: {{ recommendations.total_pages }}
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters, mapActions } = createNamespacedHelpers("movie");
+import formatContentMixin from "@/mixins/formatContentMixin";
+import Loader from "@/components/Loader";
 import Recommendations from "@/components/details/Recommendations";
 export default {
   name: "Details",
   components: {
-    Recommendations
+    Recommendations,
+    Loader
   },
-  data: () => ({})
+  props: {
+    id: {
+      type: Number,
+      default: 0
+    }
+  },
+  mixins: [formatContentMixin],
+  data: () => ({
+    isLoading: false
+  }),
+  async created() {
+    await this.loadDetails(this.id);
+    await this.loadRecommendations(this.id);
+  },
+  watch: {
+    id: async function() {
+      await this.loadDetails(this.id);
+      await this.loadRecommendations(this.id);
+    }
+  },
+  methods: {
+    ...mapActions(["getDetailsAction", "getRecommendations"]),
+    async loadDetails(id) {
+      this.isLoading = true;
+      await this.getDetailsAction(id);
+      this.isLoading = false;
+    },
+    async loadRecommendations(id) {
+      this.isLoading = true;
+      await this.getRecommendations(id);
+      this.isLoading = false;
+    }
+  },
+  computed: {
+    ...mapGetters(["details", "recommendations", "recommendationsShowLoadMore"])
+  }
 };
 </script>

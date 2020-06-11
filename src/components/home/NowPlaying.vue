@@ -13,13 +13,9 @@
 import MediaList from "@/components/MediaList";
 export default {
   name: "NowPlaying",
-
   components: {
     MediaList
   },
-
-  data: () => ({
-    //
-  })
+  data: () => ({})
 };
 </script>
