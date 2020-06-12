@@ -2,18 +2,6 @@ import INSTANCE_AXIOS from "@/settings/axios";
 import { PARAMS_DEFAULT } from "@/settings/api";
 
 export default {
-  discover(sortBy = "popularity.desc", page = 1) {
-    return INSTANCE_AXIOS.get(
-      `/discover/movie?${PARAMS_DEFAULT}&page=${page}&sort_by=${sortBy}&include_adult=false&include_video=false`
-    );
-  },
-
-  search(query, page = 1) {
-    return INSTANCE_AXIOS.get(
-      `/search/movie?${PARAMS_DEFAULT}&page=${page}&query=${query}&include_adult=false`
-    );
-  },
-
   details(mediaId) {
     return INSTANCE_AXIOS.get(`/movie/${mediaId}?${PARAMS_DEFAULT}`);
   },
