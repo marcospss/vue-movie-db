@@ -28,7 +28,7 @@ export default {
       required: true
     },
     filter: {
-      type: Object,
+      type: Object || Number,
       default: () => {},
       required: true
     },

@@ -6,19 +6,12 @@
       <h2 class="title font-weight-medium text-uppercase">Now Playing</h2>
     </MediaListLandscape>
     <v-divider></v-divider>
-    <v-row v-if="nowPlayingShowLoadMore">
-      <v-col cols="12" md="4" align="end" justify="center" class="">
-        Page: {{ nowPlaying.page }}
-      </v-col>
-      <v-col cols="12" md="4" align="center" justify="center" class="">
-        <v-btn text @click="loadNowPlaying">
-          Load More
-        </v-btn>
-      </v-col>
-      <v-col cols="12" md="4" align="start" justify="start" class="">
-        Total Pages: {{ nowPlaying.total_pages }}
-      </v-col>
-    </v-row>
+    <LoadMore
+      :showLoadMore="nowPlayingShowLoadMore"
+      :data="nowPlaying"
+      :filter="{}"
+      :triggerAction="loadNowPlaying"
+    />
   </div>
 </template>
 <script>
@@ -28,12 +21,14 @@ const { mapGetters, mapActions } = createNamespacedHelpers("movie");
 import Loader from "@/components/Loader";
 import Carousel from "@/components/home/Carousel";
 import MediaListLandscape from "@/components/MediaListLandscape";
+import LoadMore from "@/components/LoadMore";
 export default {
   name: "Home",
   components: {
     Loader,
     Carousel,
-    MediaListLandscape
+    MediaListLandscape,
+    LoadMore
   },
   data: () => ({
     isLoading: false

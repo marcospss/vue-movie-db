@@ -73,19 +73,12 @@
     <template v-if="hasRecommendations">
       <Recommendations :listMedia="recommendations" />
       <v-divider></v-divider>
-      <v-row v-if="recommendationsShowLoadMore">
-        <v-col cols="12" md="4" align="end" justify="center" class="">
-          Page: {{ recommendations.page }}
-        </v-col>
-        <v-col cols="12" md="4" align="center" justify="center" class="">
-          <v-btn text @click="loadRecommendations(id)">
-            Load More
-          </v-btn>
-        </v-col>
-        <v-col cols="12" md="4" align="start" justify="start" class="">
-          Total Pages: {{ recommendations.total_pages }}
-        </v-col>
-      </v-row>
+      <LoadMore
+        :showLoadMore="recommendationsShowLoadMore"
+        :data="recommendations"
+        :filter="id"
+        :triggerAction="loadRecommendations"
+      />
     </template>
   </v-container>
 </template>
@@ -96,11 +89,13 @@ const { mapGetters, mapActions } = createNamespacedHelpers("movie");
 import formatContentMixin from "@/mixins/formatContentMixin";
 import Loader from "@/components/Loader";
 import Recommendations from "@/components/details/Recommendations";
+import LoadMore from "@/components/LoadMore";
 export default {
   name: "Details",
   components: {
     Recommendations,
-    Loader
+    Loader,
+    LoadMore
   },
   props: {
     id: {

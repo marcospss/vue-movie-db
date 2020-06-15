@@ -33,28 +33,24 @@
         ></v-autocomplete>
       </v-col>
       <v-col cols="12" sm="3">
-        <v-btn outlined @click="loadDiscover(filterOptions)">
+        <v-btn outlined @click="applyFilters()">
           <v-icon left>mdi-filter</v-icon>
           Filter
         </v-btn>
       </v-col>
     </v-row>
+    <template>
+      <Loader :isLoading="isLoading" />
+    </template>
     <MediaListPoster :listMedia="discover" />
     <template>
       <v-divider></v-divider>
-      <v-row v-if="discoverShowLoadMore">
-        <v-col cols="12" md="4" align="end" justify="center" class="">
-          Page: {{ discover.page }}
-        </v-col>
-        <v-col cols="12" md="4" align="center" justify="center" class="">
-          <v-btn text @click="loadDiscover(filterOptions)">
-            Load More
-          </v-btn>
-        </v-col>
-        <v-col cols="12" md="4" align="start" justify="start" class="">
-          Total Pages: {{ discover.total_pages }}
-        </v-col>
-      </v-row>
+      <LoadMore
+        :showLoadMore="discoverShowLoadMore"
+        :data="discover"
+        :filter="filterOptions"
+        :triggerAction="loadDiscover"
+      />
     </template>
   </v-container>
 </template>
@@ -63,16 +59,24 @@
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapActions } = createNamespacedHelpers("movie");
 import formatContentMixin from "@/mixins/formatContentMixin";
+import Loader from "@/components/Loader";
 import MediaListPoster from "@/components/MediaListPoster";
+import LoadMore from "@/components/LoadMore";
 
 const date = new Date();
 const currentYear = date.getFullYear();
 export default {
   name: "Discover",
   components: {
-    MediaListPoster
+    Loader,
+    MediaListPoster,
+    LoadMore
   },
   mixins: [formatContentMixin],
+  beforeRouteLeave(to, from, next) {
+    this.getDiscoverResetAction();
+    next();
+  },
   data: () => ({
     isLoading: false,
     filterOptions: {
@@ -133,10 +137,13 @@ export default {
       await this.getGenresAction();
     },
     async loadDiscover(filterOptions) {
-      this.getDiscoverResetAction();
       this.isLoading = true;
       await this.getDiscover(filterOptions);
       this.isLoading = false;
+    },
+    applyFilters() {
+      this.getDiscoverResetAction();
+      this.loadDiscover(this.filterOptions);
     }
   },
   computed: {
