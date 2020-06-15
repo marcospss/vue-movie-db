@@ -1,10 +1,10 @@
 <template>
-  <v-container>
-    <v-col cols="12" class="pa-0">
+  <v-container pa-0 my-4>
+    <v-col cols="12">
       <slot />
     </v-col>
     <v-row>
-      <CardLandscape
+      <CardPoster
         v-for="media in listMedia.results"
         :key="media.id"
         :media="media"
@@ -13,9 +13,9 @@
   </v-container>
 </template>
 <script>
-import CardLandscape from "@/components/CardLandscape";
+import CardPoster from "@/components/CardPoster";
 export default {
-  name: "MediaList",
+  name: "MediaListPoster",
   props: {
     listMedia: {
       type: Object,
@@ -24,9 +24,7 @@ export default {
     }
   },
   components: {
-    CardLandscape
-  },
-
-  data: () => ({})
+    CardPoster
+  }
 };
 </script>

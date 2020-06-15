@@ -2,19 +2,19 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <MediaList>
+        <MediaListLandscape>
           <h2 class="title font-weight-medium text-uppercase">Now Playing</h2>
-        </MediaList>
+        </MediaListLandscape>
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
-import MediaList from "@/components/MediaList";
+import MediaListLandscape from "@/components/MediaListLandscape";
 export default {
   name: "NowPlaying",
   components: {
-    MediaList
+    MediaListLandscape
   },
   data: () => ({})
 };

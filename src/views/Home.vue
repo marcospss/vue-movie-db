@@ -2,9 +2,9 @@
   <div id="home">
     <Loader :isLoading="isLoading" />
     <Carousel :listMedia="popular" />
-    <MediaList :listMedia="nowPlaying" @loadMore="loadNowPlaying">
+    <MediaListLandscape :listMedia="nowPlaying" @loadMore="loadNowPlaying">
       <h2 class="title font-weight-medium text-uppercase">Now Playing</h2>
-    </MediaList>
+    </MediaListLandscape>
     <v-divider></v-divider>
     <v-row v-if="nowPlayingShowLoadMore">
       <v-col cols="12" md="4" align="end" justify="center" class="">
@@ -27,13 +27,13 @@ const { mapGetters, mapActions } = createNamespacedHelpers("movie");
 
 import Loader from "@/components/Loader";
 import Carousel from "@/components/home/Carousel";
-import MediaList from "@/components/MediaList";
+import MediaListLandscape from "@/components/MediaListLandscape";
 export default {
   name: "Home",
   components: {
     Loader,
     Carousel,
-    MediaList
+    MediaListLandscape
   },
   data: () => ({
     isLoading: false
