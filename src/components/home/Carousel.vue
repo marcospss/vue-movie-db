@@ -36,15 +36,13 @@
                 </v-row>
               </template>
             </v-img>
+            <!-- <ButtonFavorite :media="media" /> -->
             <v-card-text class="px-0 title-box">{{
               media.overview
             }}</v-card-text>
             <v-card-actions class="px-0">
               <v-btn text :to="{ name: 'Details', params: { id: media.id } }">
                 Read More
-              </v-btn>
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -72,5 +70,10 @@ export default {
 .title-box {
   min-height: 100px;
   max-height: 100px;
+}
+.favorite {
+  position: relative;
+  width: 100%;
+  padding: 16px;
 }
 </style>

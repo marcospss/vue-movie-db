@@ -5,7 +5,11 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 
+import ButtonFavorite from "@/components/ButtonFavorite.vue";
+
 Vue.config.productionTip = false;
+
+Vue.component("ButtonFavorite", ButtonFavorite);
 
 new Vue({
   router,

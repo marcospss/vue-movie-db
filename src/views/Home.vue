@@ -1,8 +1,8 @@
 <template>
   <div id="home">
     <Loader :isLoading="isLoading" />
-    <Carousel :listMedia="popular" />
-    <MediaListLandscape :listMedia="nowPlaying" @loadMore="loadNowPlaying">
+    <Carousel v-if="!isLoading" :listMedia="popular" />
+    <MediaListLandscape v-if="!isLoading" :listMedia="nowPlaying.results">
       <h2 class="title font-weight-medium text-uppercase">Now Playing</h2>
     </MediaListLandscape>
     <v-divider></v-divider>

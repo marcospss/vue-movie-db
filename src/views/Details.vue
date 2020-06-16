@@ -26,12 +26,8 @@
           </v-btn>
           <v-row class="fill-height pa-5" align="center">
             <v-col cols="12" md="8" offset-xs="0" offset-md="4" offset="0">
-              <v-sheet
-                cols="12"
-                md="7"
-                class="pa-12"
-                style="background-color: #1e1e1e9a"
-              >
+              <v-sheet cols="12" md="7" class="pa-12 bg-info-details">
+                <ButtonFavorite class="pos-button-favorite" :media="details" />
                 <h1 class="display-3 font-weight-light mt-6">
                   {{ details.title }}
                 </h1>
@@ -71,7 +67,7 @@
       </v-card>
     </template>
     <template v-if="hasRecommendations">
-      <Recommendations :listMedia="recommendations" />
+      <Recommendations :listMedia="recommendations.results" />
       <v-divider></v-divider>
       <LoadMore
         :showLoadMore="recommendationsShowLoadMore"
@@ -90,12 +86,14 @@ import formatContentMixin from "@/mixins/formatContentMixin";
 import Loader from "@/components/Loader";
 import Recommendations from "@/components/details/Recommendations";
 import LoadMore from "@/components/LoadMore";
+import ButtonFavorite from "@/components/ButtonFavorite";
 export default {
   name: "Details",
   components: {
     Recommendations,
     Loader,
-    LoadMore
+    LoadMore,
+    ButtonFavorite
   },
   props: {
     id: {
@@ -147,3 +145,14 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.bg-info-details {
+  background-color: #1e1e1e9a;
+  position: relative;
+}
+.pos-button-favorite {
+  top: 0px;
+  position: absolute;
+  right: 0px;
+}
+</style>

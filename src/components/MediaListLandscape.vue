@@ -5,9 +5,10 @@
     </v-col>
     <v-row>
       <CardLandscape
-        v-for="media in listMedia.results"
+        v-for="media in listMedia"
         :key="media.id"
         :media="media"
+        :showButtonFavorite="showButtonFavorite"
       />
     </v-row>
   </v-container>
@@ -18,9 +19,13 @@ export default {
   name: "MediaListLandscape",
   props: {
     listMedia: {
-      type: Object,
+      type: Array,
       default: () => [],
       required: true
+    },
+    showButtonFavorite: {
+      type: Boolean,
+      default: () => false
     }
   },
   components: {

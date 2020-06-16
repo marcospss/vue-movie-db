@@ -42,7 +42,7 @@
     <template>
       <Loader :isLoading="isLoading" />
     </template>
-    <MediaListPoster :listMedia="discover" />
+    <MediaListPoster v-if="!isLoading" :listMedia="discover.results" />
     <template>
       <v-divider></v-divider>
       <LoadMore

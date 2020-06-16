@@ -21,6 +21,7 @@
           </v-row>
         </template>
       </v-img>
+      <ButtonFavorite v-if="showButtonFavorite" :media="media" />
       <v-card-title class="text-break title-box">{{
         media.title
       }}</v-card-title>
@@ -45,6 +46,10 @@ export default {
       type: Object,
       default: () => {},
       required: true
+    },
+    showButtonFavorite: {
+      type: Boolean,
+      default: () => false
     }
   },
   mixins: [formatContentMixin]

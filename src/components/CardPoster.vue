@@ -31,6 +31,7 @@
                 ></v-progress-circular>
               </v-row>
             </template>
+            <ButtonFavorite v-if="showButtonFavorite" :media="media" />
           </v-img>
         </v-avatar>
       </div>
@@ -47,6 +48,10 @@ export default {
       type: Object,
       default: () => {},
       required: true
+    },
+    showButtonFavorite: {
+      type: Boolean,
+      default: () => false
     }
   },
   mixins: [formatContentMixin]

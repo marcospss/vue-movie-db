@@ -14,3 +14,9 @@ export const MOVIE = {
   GET_DISCOVER_LIST: "getDiscoverList",
   GET_GENRES_LIST: "getGenresList"
 };
+
+export const FAVORITES = {
+  GET_LIST: "getList",
+  ADD: "add",
+  REMOVE: "remove"
+};
