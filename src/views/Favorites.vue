@@ -13,7 +13,7 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters, mapActions } = createNamespacedHelpers("favorites");
+const { mapGetters } = createNamespacedHelpers("favorites");
 import Loader from "@/components/Loader";
 import MediaListLandscape from "@/components/MediaListLandscape";
 
@@ -26,17 +26,6 @@ export default {
   data: () => ({
     isLoading: false
   }),
-  async created() {
-    await this.loadFavorites();
-  },
-  methods: {
-    ...mapActions(["getList"]),
-    async loadFavorites() {
-      this.isLoading = true;
-      await this.getList();
-      this.isLoading = false;
-    }
-  },
   computed: {
     ...mapGetters(["favorites"])
   }

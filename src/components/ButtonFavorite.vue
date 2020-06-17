@@ -20,24 +20,25 @@ export default {
   data: () => ({
     isFavorite: false
   }),
-  watch: {},
   async created() {
-    console.log("ButtonFavorite", this.media);
+    const { id } = await this.media;
+    const findIsFavorite = await this.getIsFavorite(id);
+    this.isFavorite = !!findIsFavorite;
+    console.log("findIsFavorite", !!findIsFavorite);
   },
   methods: {
     ...mapActions(["add", "remove"]),
     triggerAction() {
       if (this.isFavorite) {
         this.remove(this.media);
-        this.isFavorite = !this.isFavorite;
+        this.isFavorite = false;
       }
       this.add(this.media);
-      console.log("triggerAction", this.media);
-      // this.isFavorite(media);
+      this.isFavorite = true;
     }
   },
   computed: {
-    ...mapGetters(["favorites"])
+    ...mapGetters(["favorites", "getIsFavorite"])
   }
 };
 </script>

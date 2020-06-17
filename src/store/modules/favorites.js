@@ -172,7 +172,8 @@ const favorites = {
       state.list.push(data);
     },
     [FAVORITES.REMOVE](state, data) {
-      state.list = data;
+      const { id } = data;
+      state.list = state.list.filter(media => media.id !== id);
     }
   },
   actions: {
@@ -187,7 +188,11 @@ const favorites = {
     }
   },
   getters: {
-    favorites: state => state.list
+    favorites: state => state.list,
+    totalFavorites: state => state.list.length,
+    getIsFavorite: state => id => {
+      return state.list.find(media => media.id === id);
+    }
   }
 };
 

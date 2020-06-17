@@ -16,6 +16,11 @@
         <v-btn text to="/favorites" class="hidden-sm-and-down">
           <v-icon left>mdi-heart</v-icon>
           Favorites
+          <v-badge
+            v-if="totalFavorites"
+            color="blue-grey ml-1 v-btn--right"
+            :content="totalFavorites"
+          ></v-badge>
         </v-btn>
         <v-text-field
           append-icon="mdi-magnify"
@@ -29,3 +34,14 @@
     </v-container>
   </v-app-bar>
 </template>
+<script>
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("favorites");
+
+export default {
+  name: "Header",
+  computed: {
+    ...mapGetters(["totalFavorites"])
+  }
+};
+</script>

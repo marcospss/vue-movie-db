@@ -13,7 +13,7 @@ export default {
   },
   props: {
     listMedia: {
-      type: Object,
+      type: Array,
       default: () => [],
       required: true
     }
