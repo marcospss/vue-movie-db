@@ -24,7 +24,6 @@ export default {
     const { id } = await this.media;
     const findIsFavorite = await this.getIsFavorite(id);
     this.isFavorite = !!findIsFavorite;
-    console.log("findIsFavorite", !!findIsFavorite);
   },
   methods: {
     ...mapActions(["add", "remove"]),
@@ -32,6 +31,7 @@ export default {
       if (this.isFavorite) {
         this.remove(this.media);
         this.isFavorite = false;
+        return;
       }
       this.add(this.media);
       this.isFavorite = true;
