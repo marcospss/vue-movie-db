@@ -1,26 +1,10 @@
 <template>
-  <v-app>
-    <Header />
-    <v-content>
-      <Loader />
-      <router-view />
-    </v-content>
-    <Footer />
-  </v-app>
+  <router-view />
 </template>
 
 <script>
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import Loader from "@/components/Loader";
-
 export default {
-  name: "App",
-  components: {
-    Header,
-    Footer,
-    Loader
-  }
+  name: "App"
 };
 </script>
 <style lang="scss">

@@ -20,3 +20,9 @@ export const FAVORITES = {
   ADD: "add",
   REMOVE: "remove"
 };
+
+export const USER = {
+  SET_LOGGED_IN: "setLoggedIn",
+  SIGN_IN: "signIn",
+  SIGN_OUT: "signOut"
+};

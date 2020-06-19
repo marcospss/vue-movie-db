@@ -5,7 +5,7 @@
     </template>
     <MediaListLandscape
       v-if="!isLoading"
-      :listMedia="favorites"
+      :listMedia="list"
       :showButtonFavorite="true"
     />
   </v-container>
@@ -27,7 +27,7 @@ export default {
     isLoading: false
   }),
   computed: {
-    ...mapGetters(["favorites"])
+    ...mapGetters(["list"])
   }
 };
 </script>

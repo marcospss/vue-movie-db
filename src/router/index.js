@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import GlobalShell from "../GlobalShell.vue";
 import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
@@ -9,27 +10,46 @@ const parseProps = routerObject => ({ id: parseInt(routerObject.params.id) });
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    name: "site",
+    component: GlobalShell,
+    children: [
+      {
+        path: "/",
+        name: "Home",
+        component: Home
+      },
+      {
+        path: "/details/:id",
+        name: "Details",
+        props: parseProps,
+        component: () =>
+          import(/* webpackChunkName: "details" */ "../views/Details.vue")
+      },
+      {
+        path: "/favorites",
+        name: "Favorites",
+        component: () =>
+          import(/* webpackChunkName: "favorites" */ "../views/Favorites.vue")
+      },
+      {
+        path: "/discover",
+        name: "Discover",
+        component: () =>
+          import(/* webpackChunkName: "discover" */ "../views/Discover.vue")
+      }
+    ]
   },
   {
-    path: "/details/:id",
-    name: "Details",
-    props: parseProps,
+    path: "/login",
+    name: "Login",
     component: () =>
-      import(/* webpackChunkName: "details" */ "../views/Details.vue")
+      import(/* webpackChunkName: "login" */ "../views/Login.vue")
   },
   {
-    path: "/favorites",
-    name: "Favorites",
+    path: "/register",
+    name: "Register",
     component: () =>
-      import(/* webpackChunkName: "favorites" */ "../views/Favorites.vue")
-  },
-  {
-    path: "/discover",
-    name: "Discover",
-    component: () =>
-      import(/* webpackChunkName: "discover" */ "../views/Discover.vue")
+      import(/* webpackChunkName: "register" */ "../views/Register.vue")
   }
 ];
 

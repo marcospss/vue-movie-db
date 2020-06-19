@@ -17,9 +17,9 @@
           <v-icon left>mdi-heart</v-icon>
           Favorites
           <v-badge
-            v-if="totalFavorites"
+            v-if="this.$store.getters['favorites/totalFavorites']"
             color="blue-grey ml-1 v-btn--right"
-            :content="totalFavorites"
+            :content="this.$store.getters['favorites/totalFavorites']"
           ></v-badge>
         </v-btn>
         <v-text-field
@@ -30,18 +30,55 @@
           class="hidden-sm-and-down ml-6"
           label="Search"
         />
+        <v-spacer></v-spacer>
+        <template v-if="this.$store.getters['user/loggedIn']">
+          <v-btn text @click="signOut" exact class="hidden-sm-and-down">
+            <v-icon left>mdi-account-box</v-icon>
+            <span
+              class="d-inline-block text-truncate hidden-sm-and-down font-weight-black user-max-width"
+            >
+              {{ this.$store.getters["user/info"].displayName }}
+            </span>
+          </v-btn>
+        </template>
+        <template v-else>
+          <v-btn
+            text
+            :to="{ name: 'Login' }"
+            exact
+            class="hidden-sm-and-down user-max-width"
+          >
+            <v-icon left>mdi-account-box</v-icon>
+            Login
+          </v-btn>
+        </template>
       </v-row>
     </v-container>
   </v-app-bar>
 </template>
 <script>
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("favorites");
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Header",
+  methods: {
+    ...mapActions(["user/signOut"]),
+    async signOut() {
+      await this["user/signOut"]();
+    }
+  },
   computed: {
-    ...mapGetters(["totalFavorites"])
+    ...mapGetters(
+      ["favorites/totalFavorites"],
+      ["user/loggedIn"],
+      ["user/info"]
+    )
   }
 };
 </script>
+<style lang="scss">
+.user-max-width {
+  min-width: 120px;
+  max-width: 164px;
+}
+</style>
