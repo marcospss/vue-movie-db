@@ -32,7 +32,7 @@
         />
         <v-spacer></v-spacer>
         <template v-if="this.$store.getters['user/loggedIn']">
-          <v-btn text @click="signOut" exact class="hidden-sm-and-down">
+          <v-btn text @click="dialog = true" exact class="hidden-sm-and-down">
             <v-icon left>mdi-account-box</v-icon>
             <span
               class="d-inline-block text-truncate hidden-sm-and-down font-weight-black user-max-width"
@@ -53,18 +53,50 @@
           </v-btn>
         </template>
       </v-row>
+      <v-row justify="center">
+        <v-dialog v-model="dialog" max-width="290">
+          <v-card>
+            <v-card-title class="headline">
+              Are you sure you want to log out.
+            </v-card-title>
+
+            <v-card-text>
+              You will be logged out of your account and redirected to Home.
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+
+              <v-btn color="green darken-1" text @click="dialog = false">
+                Disagree
+              </v-btn>
+
+              <v-btn color="green darken-1" text @click="signOut">
+                Agree
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
     </v-container>
   </v-app-bar>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+import firebase from "@/services/firebase";
 
 export default {
   name: "Header",
+  data: () => ({
+    dialog: false
+  }),
   methods: {
     ...mapActions(["user/signOut"]),
     async signOut() {
+      await firebase.signOut();
       await this["user/signOut"]();
+      this.dialog = false;
+      this.$router.replace({ name: "Home" });
     }
   },
   computed: {

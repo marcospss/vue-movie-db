@@ -8,7 +8,7 @@ const defaultInfo = {
 const user = {
   namespaced: true,
   state: {
-    loggedIn: true,
+    loggedIn: false,
     info: defaultInfo
   },
   mutations: {

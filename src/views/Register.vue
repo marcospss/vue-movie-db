@@ -41,7 +41,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn text x-large @click="submit">Register</v-btn>
+              <v-btn text x-large @click="register">Register</v-btn>
             </v-card-actions>
             <v-divider></v-divider>
             <v-card-text>
@@ -59,8 +59,9 @@
   </v-app>
 </template>
 <script>
-import firebase from "firebase";
-
+import { createNamespacedHelpers } from "vuex";
+const { mapActions } = createNamespacedHelpers("user");
+import firebase from "@/services/firebase";
 export default {
   data: () => ({
     snackbar: false,
@@ -73,23 +74,20 @@ export default {
     }
   }),
   methods: {
-    submit() {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.form.email, this.form.password)
-        .then(data => {
-          data.user
-            .updateProfile({
-              displayName: this.form.name
-            })
-            .then(() => {
-              this.$router.replace({ name: "Home" });
-            });
-        })
-        .catch(err => {
-          this.snackbar = true;
-          this.text = err.message;
+    ...mapActions(["fetchUser"]),
+    async register() {
+      try {
+        const { name, email, password } = this.form;
+        const response = await firebase.register(email, password);
+        await response.user.updateProfile({
+          displayName: name
         });
+        this.fetchUser(response.user);
+        this.$router.replace({ name: "Home" });
+      } catch (error) {
+        this.snackbar = true;
+        this.text = error.message;
+      }
     }
   }
 };

@@ -42,7 +42,7 @@
                 Register
               </v-btn>
               <v-spacer></v-spacer>
-              <v-btn text x-large @click="submit">Login</v-btn>
+              <v-btn text x-large @click="signIn">Login</v-btn>
             </v-card-actions>
             <v-divider></v-divider>
             <v-card-text>
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from "@/services/firebase";
 
 export default {
   data: () => ({
@@ -74,17 +74,15 @@ export default {
     }
   }),
   methods: {
-    submit() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.form.email, this.form.password)
-        .then(() => {
-          this.$router.replace({ name: "Home" });
-        })
-        .catch(err => {
-          this.snackbar = true;
-          this.text = err.message;
-        });
+    async signIn() {
+      try {
+        const { email, password } = this.form;
+        await firebase.signIn(email, password);
+        this.$router.replace({ name: "Home" });
+      } catch (error) {
+        this.snackbar = true;
+        this.text = error.message;
+      }
     }
   }
 };
