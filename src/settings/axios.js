@@ -1,18 +1,24 @@
 import axios from "axios";
 import { API } from "./api";
+import FIREBASE from "./firebase";
 
-const instance = axios.create({
+export const axios_API_TMDB = axios.create({
   baseURL: API.baseURL
 });
 
 // before a request is made start
-instance.interceptors.request.use(config => {
+axios_API_TMDB.interceptors.request.use(config => {
   return config;
 });
 
 // before a response is returned stop
-instance.interceptors.response.use(response => {
+axios_API_TMDB.interceptors.response.use(response => {
   return response;
 });
 
-export default instance;
+export const axiosFirebase = axios.create({
+  baseURL: FIREBASE.databaseURL,
+  params: {
+    key: FIREBASE.apiKey
+  }
+});

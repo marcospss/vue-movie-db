@@ -2,8 +2,9 @@ import { USER } from "../mutationTypes";
 
 const defaultInfo = {
   displayName: null,
-  email: null
-}
+  email: null,
+  uid: null
+};
 
 const user = {
   namespaced: true,
@@ -29,7 +30,8 @@ const user = {
       if (user) {
         await commit(USER.SIGN_IN, {
           displayName: user.displayName,
-          email: user.email
+          email: user.email,
+          uid: user.uid
         });
       } else {
         await commit(USER.SIGN_IN, null);

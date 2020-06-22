@@ -1,4 +1,5 @@
 import { FAVORITES } from "../mutationTypes";
+// import firebase from "@/services/firebase";
 
 const favorites = {
   namespaced: true,
@@ -21,11 +22,13 @@ const favorites = {
     getList({ commit }) {
       commit(FAVORITES.GET_LIST, []);
     },
-    add({ commit }, data) {
-      commit(FAVORITES.ADD, data);
+    async add({ commit }, { uid, media }) {
+      // await firebase.addWatchList(uid, media);
+      commit(FAVORITES.ADD, media);
     },
-    remove({ commit }, data) {
-      commit(FAVORITES.REMOVE, data);
+    async remove({ commit }, { uid, media }) {
+      // await firebase.removeWatchList(uid, media);
+      commit(FAVORITES.REMOVE, media);
     }
   },
   getters: {

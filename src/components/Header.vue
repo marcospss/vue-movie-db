@@ -54,7 +54,7 @@
         </template>
       </v-row>
       <v-row justify="center">
-        <v-dialog v-model="dialog" max-width="290">
+        <v-dialog v-model="dialog" :persistent="true" max-width="400">
           <v-card>
             <v-card-title class="headline">
               Are you sure you want to log out.
@@ -67,12 +67,12 @@
             <v-card-actions>
               <v-spacer></v-spacer>
 
-              <v-btn color="green darken-1" text @click="dialog = false">
-                Disagree
+              <v-btn color="red darken-1" text @click="dialog = false">
+                Cancel
               </v-btn>
 
               <v-btn color="green darken-1" text @click="signOut">
-                Agree
+                Confirm
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -96,7 +96,6 @@ export default {
       await firebase.signOut();
       await this["user/signOut"]();
       this.dialog = false;
-      this.$router.replace({ name: "Home" });
     }
   },
   computed: {
