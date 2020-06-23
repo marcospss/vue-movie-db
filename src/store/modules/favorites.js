@@ -25,7 +25,7 @@ const favorites = {
         if (loggedIn) {
           const { uid } = rootGetters["user/info"];
           const response = await firebase.getWatchList(uid);
-          const watchList = (response.data && Object.values(response.data)) || [];
+          const watchList = response.data ? Object.values(response.data) : [];
           commit(FAVORITES.GET_LIST, watchList);
           return;
         }

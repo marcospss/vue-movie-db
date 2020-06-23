@@ -7,6 +7,9 @@
       <v-card>
         <v-card-title class="headline">
           You are not logged in.
+          <v-btn fab x-small dark absolute right @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
         </v-card-title>
 
         <v-card-text>
@@ -34,6 +37,15 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-snackbar
+      v-model="snackbar"
+      color="success"
+      rounded="pill"
+      absolute
+      z-index="99"
+    >
+      {{ text }}
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -50,7 +62,10 @@ export default {
   },
   data: () => ({
     isFavorite: false,
-    dialog: false
+    dialog: false,
+    snackbar: false,
+    text: null,
+    timeout: 40000
   }),
   async created() {
     const { id } = await this.media;
@@ -68,9 +83,13 @@ export default {
       if (this.isFavorite) {
         this["favorites/remove"]({ uid, media: this.media });
         this.isFavorite = false;
+        this.snackbar = true;
+        this.text = "Successfully removed!";
         return;
       }
       this["favorites/add"]({ uid, media: this.media });
+      this.snackbar = true;
+      this.text = "Saved successfully!";
       this.isFavorite = true;
     },
     triggerUserAccount(value) {
