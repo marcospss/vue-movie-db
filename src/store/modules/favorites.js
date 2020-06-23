@@ -1,5 +1,5 @@
 import { FAVORITES } from "../mutationTypes";
-// import firebase from "@/services/firebase";
+import firebase from "@/services/firebase";
 
 const favorites = {
   namespaced: true,
@@ -19,15 +19,25 @@ const favorites = {
     }
   },
   actions: {
-    getList({ commit }) {
-      commit(FAVORITES.GET_LIST, []);
+    async getList({ commit, rootGetters }) {
+      setTimeout(async function() {
+        const loggedIn = rootGetters["user/loggedIn"];
+        if (loggedIn) {
+          const { uid } = rootGetters["user/info"];
+          const response = await firebase.getWatchList(uid);
+          const watchList = (response.data && Object.values(response.data)) || [];
+          commit(FAVORITES.GET_LIST, watchList);
+          return;
+        }
+        commit(FAVORITES.GET_LIST, []);
+      }, 1500);
     },
     async add({ commit }, { uid, media }) {
-      // await firebase.addWatchList(uid, media);
+      await firebase.addWatchList(uid, media);
       commit(FAVORITES.ADD, media);
     },
     async remove({ commit }, { uid, media }) {
-      // await firebase.removeWatchList(uid, media);
+      await firebase.removeWatchList(uid, media);
       commit(FAVORITES.REMOVE, media);
     }
   },

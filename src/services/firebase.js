@@ -1,7 +1,7 @@
 import * as firebase from "firebase";
 import firebaseOptions from "@/settings/firebase";
 import { axiosFirebase } from "@/settings/axios";
-// https://cloud.google.com/identity-platform/docs/reference/rest/v1
+// https://firebase.google.com/docs/database/security
 export default {
   initializeApp() {
     return firebase.initializeApp(firebaseOptions);
@@ -26,7 +26,6 @@ export default {
     return await axiosFirebase.get(`/watchlist/${uid}.json`);
   },
   async addWatchList(uid, data) {
-    console.log("addWatchList", uid, data)
     return await axiosFirebase.put(`/watchlist/${uid}/${data.id}.json`, data);
   },
   async removeWatchList(uid, data) {

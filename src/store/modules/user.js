@@ -25,16 +25,16 @@ const user = {
     }
   },
   actions: {
-    async fetchUser({ commit }, user) {
-      await commit(USER.SET_LOGGED_IN, user !== null);
+    fetchUser({ commit }, user) {
+      commit(USER.SET_LOGGED_IN, user !== null);
       if (user) {
-        await commit(USER.SIGN_IN, {
+        commit(USER.SIGN_IN, {
           displayName: user.displayName,
           email: user.email,
           uid: user.uid
         });
       } else {
-        await commit(USER.SIGN_IN, null);
+        commit(USER.SIGN_IN, null);
       }
     },
     async signOut({ commit }) {

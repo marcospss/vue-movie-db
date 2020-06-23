@@ -99,11 +99,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(
-      ["favorites/totalFavorites"],
-      ["user/loggedIn"],
-      ["user/info"]
-    )
+    ...mapGetters(["favorites/totalFavorites", "user/loggedIn", "user/info"])
   }
 };
 </script>

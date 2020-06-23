@@ -20,9 +20,9 @@ new Vue({
   vuetify,
   render: h => h(App),
   async created() {
+    firebase.initializeApp();
+    firebase.auth(store);
     await this.loadFavorites();
-    await firebase.initializeApp();
-    await firebase.auth(store);
   },
   methods: {
     ...mapActions(["favorites/getList"]),
