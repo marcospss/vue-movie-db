@@ -18,7 +18,8 @@ export const MOVIE = {
 export const FAVORITES = {
   GET_LIST: "getList",
   ADD: "add",
-  REMOVE: "remove"
+  REMOVE: "remove",
+  RESET: "reset"
 };
 
 export const USER = {

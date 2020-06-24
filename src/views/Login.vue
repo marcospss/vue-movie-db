@@ -62,6 +62,7 @@
 
 <script>
 import firebase from "@/services/firebase";
+import { mapActions } from "vuex";
 
 export default {
   data: () => ({
@@ -74,10 +75,12 @@ export default {
     }
   }),
   methods: {
+    ...mapActions(["favorites/getList"]),
     async signIn() {
       try {
         const { email, password } = this.form;
         await firebase.signIn(email, password);
+        await this["favorites/getList"]();
         this.$router.replace({ name: "Home" });
       } catch (error) {
         this.snackbar = true;

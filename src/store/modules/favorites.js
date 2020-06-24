@@ -16,6 +16,9 @@ const favorites = {
     [FAVORITES.REMOVE](state, data) {
       const { id } = data;
       state.list = state.list.filter(media => media.id !== id);
+    },
+    [FAVORITES.RESET](state) {
+      state.list = [];
     }
   },
   actions: {
@@ -39,6 +42,9 @@ const favorites = {
     async remove({ commit }, { uid, media }) {
       await firebase.removeWatchList(uid, media);
       commit(FAVORITES.REMOVE, media);
+    },
+    async reset({ commit }) {
+      commit(FAVORITES.RESET);
     }
   },
   getters: {

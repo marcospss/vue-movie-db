@@ -91,10 +91,11 @@ export default {
     dialog: false
   }),
   methods: {
-    ...mapActions(["user/signOut"]),
+    ...mapActions(["user/signOut", "favorites/reset"]),
     async signOut() {
       await firebase.signOut();
       await this["user/signOut"]();
+      this["favorites/reset"]();
       this.dialog = false;
     }
   },
