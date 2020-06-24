@@ -10,7 +10,7 @@
       :showLoadMore="nowPlayingShowLoadMore"
       :data="nowPlaying"
       :filter="{}"
-      :triggerAction="loadNowPlaying"
+      :triggerAction="loadMoreNowPlaying"
     />
   </div>
 </template>
@@ -49,6 +49,9 @@ export default {
       this.isLoading = true;
       await this.getNowPlaying();
       this.isLoading = false;
+    },
+    async loadMoreNowPlaying() {
+      await this.getNowPlaying();
     }
   },
   computed: {
