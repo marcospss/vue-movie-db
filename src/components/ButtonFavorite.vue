@@ -65,7 +65,7 @@ export default {
     dialog: false,
     snackbar: false,
     text: null,
-    timeout: 40000
+    timeout: 1500
   }),
   async created() {
     const { id } = await this.media;
