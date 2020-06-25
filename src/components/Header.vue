@@ -32,7 +32,12 @@
         />
         <v-spacer></v-spacer>
         <template v-if="this.$store.getters['user/loggedIn']">
-          <v-btn text @click="dialog = true" exact class="hidden-sm-and-down">
+          <v-btn
+            text
+            @click="toggleDialogLogout"
+            exact
+            class="hidden-sm-and-down"
+          >
             <v-icon left>mdi-account-box</v-icon>
             <span
               class="d-inline-block text-truncate hidden-sm-and-down font-weight-black user-max-width"
@@ -53,54 +58,29 @@
           </v-btn>
         </template>
       </v-row>
-      <v-row justify="center">
-        <v-dialog v-model="dialog" :persistent="true" max-width="400">
-          <v-card>
-            <v-card-title class="headline">
-              Are you sure you want to log out.
-            </v-card-title>
-
-            <v-card-text>
-              You will be logged out of your account and redirected to Home.
-            </v-card-text>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <v-btn color="red darken-1" text @click="dialog = false">
-                Cancel
-              </v-btn>
-
-              <v-btn color="green darken-1" text @click="signOut">
-                Confirm
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-row>
+      <DialogLogout :dialog="dialog" @toggleDialogLogout="toggleDialogLogout" />
     </v-container>
   </v-app-bar>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
-import firebase from "@/services/firebase";
+import { mapGetters } from "vuex";
+import DialogLogout from "./DialogLogout";
 
 export default {
   name: "Header",
+  components: {
+    DialogLogout
+  },
   data: () => ({
     dialog: false
   }),
-  methods: {
-    ...mapActions(["user/signOut", "favorites/reset"]),
-    async signOut() {
-      await firebase.signOut();
-      await this["user/signOut"]();
-      this["favorites/reset"]();
-      this.dialog = false;
-    }
-  },
   computed: {
     ...mapGetters(["favorites/totalFavorites", "user/loggedIn", "user/info"])
+  },
+  methods: {
+    toggleDialogLogout() {
+      this.dialog = !this.dialog;
+    }
   }
 };
 </script>
