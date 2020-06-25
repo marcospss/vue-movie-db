@@ -43,6 +43,7 @@
       rounded="pill"
       absolute
       z-index="99"
+      :timeout="timeout"
     >
       {{ text }}
     </v-snackbar>
@@ -65,7 +66,7 @@ export default {
     dialog: false,
     snackbar: false,
     text: null,
-    timeout: 1500
+    timeout: 1200
   }),
   async created() {
     const { id } = await this.media;
