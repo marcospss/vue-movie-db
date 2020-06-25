@@ -49,7 +49,7 @@
         :showLoadMore="discoverShowLoadMore"
         :data="discover"
         :filter="filterOptions"
-        :triggerAction="loadDiscover"
+        :triggerAction="loadMoreDiscover"
       />
     </template>
   </v-container>
@@ -136,14 +136,17 @@ export default {
     async loadGenres() {
       await this.getGenresAction();
     },
-    async loadDiscover(filterOptions) {
+    async loadDiscover() {
       this.isLoading = true;
-      await this.getDiscover(filterOptions);
+      await this.getDiscover(this.filterOptions);
       this.isLoading = false;
     },
     applyFilters() {
       this.getDiscoverResetAction();
       this.loadDiscover(this.filterOptions);
+    },
+    async loadMoreDiscover() {
+      await this.getDiscover(this.filterOptions);
     }
   },
   computed: {
