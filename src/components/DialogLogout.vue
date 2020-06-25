@@ -44,7 +44,7 @@ export default {
       await firebase.signOut();
       await this["user/signOut"]();
       this["favorites/reset"]();
-      this.dialog = false;
+      this.$emit("toggleDialogLogout");
     },
     triggerCloseDialogLogout() {
       this.$emit("toggleDialogLogout");
