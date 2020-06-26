@@ -70,7 +70,7 @@ const movie = {
         ? parseInt(state.nowPlaying.page, 10) + 1
         : 1;
       const response = await movieService.nowPlaying(nextPage);
-      const data = response && response.data && response.data;
+      const data = response && response.data;
       commit(MOVIE.GET_NOW_PLAYING_LIST, data);
     },
     async getDetailsAction({ commit }, mediaId) {

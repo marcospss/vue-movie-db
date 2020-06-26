@@ -27,3 +27,9 @@ export const USER = {
   SIGN_IN: "signIn",
   SIGN_OUT: "signOut"
 };
+
+export const SEARCH = {
+  SET_QUERY: "setQuery",
+  GET_RESULTS: "getResults",
+  RESET: "reset"
+};

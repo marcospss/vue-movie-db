@@ -17,7 +17,7 @@
           <v-icon slot="icon" size="36">
             mdi-comment-alert-outline
           </v-icon>
-          Unfortunately, your favorites list is empty.
+          Unfortunately, your list is empty.
 
           <template v-slot:actions>
             <v-btn :to="{ name: 'Home' }" text large>

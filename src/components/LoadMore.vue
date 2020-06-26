@@ -1,5 +1,6 @@
 <template>
   <v-row v-if="showLoadMore">
+    <v-col cols="12"><v-divider></v-divider></v-col>
     <v-col cols="12" md="4" align="end" justify="center" class="">
       Page: {{ data.page }}
     </v-col>

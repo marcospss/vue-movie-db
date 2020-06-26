@@ -22,14 +22,7 @@
             :content="this.$store.getters['favorites/totalFavorites']"
           ></v-badge>
         </v-btn>
-        <v-text-field
-          append-icon="mdi-magnify"
-          flat
-          hide-details
-          solo-inverted
-          class="hidden-sm-and-down ml-6"
-          label="Search"
-        />
+        <InputSearch />
         <v-spacer></v-spacer>
         <template v-if="this.$store.getters['user/loggedIn']">
           <v-btn
@@ -65,11 +58,13 @@
 <script>
 import { mapGetters } from "vuex";
 import DialogLogout from "./DialogLogout";
+import InputSearch from "./InputSearch";
 
 export default {
   name: "Header",
   components: {
-    DialogLogout
+    DialogLogout,
+    InputSearch
   },
   data: () => ({
     dialog: false
