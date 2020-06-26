@@ -10,7 +10,6 @@ const parseProps = routerObject => ({ id: parseInt(routerObject.params.id) });
 const routes = [
   {
     path: "/",
-    name: "site",
     component: GlobalShell,
     children: [
       {
