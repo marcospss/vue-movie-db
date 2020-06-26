@@ -34,7 +34,6 @@ export default {
       if (!value) {
         this.setQuery(null);
       }
-      console.log("value", value);
     }
   },
   computed: {
