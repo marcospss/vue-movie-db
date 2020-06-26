@@ -7,7 +7,7 @@
     </v-row>
     <v-row v-if="!data.results.length">
       <v-col cols="12">
-        <v-banner single-line @click:icon="backHome">
+        <v-banner single-line>
           <v-icon slot="icon" size="36">
             mdi-comment-alert-outline
           </v-icon>
@@ -42,6 +42,7 @@ export default {
   },
   mixins: [formatContentMixin],
   beforeRouteLeave(to, from, next) {
+    this.setQuery(null);
     this.reset();
     next();
   },
@@ -50,7 +51,7 @@ export default {
   }),
   async created() {},
   methods: {
-    ...mapActions(["getResults", "reset"])
+    ...mapActions(["setQuery", "getResults", "reset"])
   },
   computed: {
     ...mapGetters(["data", "query", "searchShowLoadMore"])

@@ -6,8 +6,9 @@
     solo-inverted
     class="hidden-sm-and-down ml-6"
     label="Search"
-    v-model="query"
+    :value="query"
     clearable
+    @input="searchMedia($event)"
   />
 </template>
 <script>
@@ -15,33 +16,29 @@ import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapActions } = createNamespacedHelpers("search");
 export default {
   name: "InputSearch",
-  data: () => ({
-    query: null
-  }),
-  watch: {
-    query: function() {
-      this.searchMedia();
-    }
-  },
   methods: {
     ...mapActions(["setQuery", "getResults", "reset"]),
-    async searchMedia() {
-      let querySearch = this.query || "";
+    async searchMedia(value) {
+      let querySearch = !!(value && value.length >= 3);
       const currentRoute = this.$router.currentRoute.name;
-      if (querySearch.length >= 3) {
+      if (querySearch) {
         this.reset();
-        await this.getResults(this.query);
+        this.setQuery(value);
+        await this.getResults(value);
         if (currentRoute !== "Search") {
           this.$router.replace({ name: "Search" });
         }
-        return;
+      } else {
+        this.reset();
       }
-      this.reset();
-      this.setQuery(null);
+      if (!value) {
+        this.setQuery(null);
+      }
+      console.log("value", value);
     }
   },
   computed: {
-    ...mapGetters(["data"])
+    ...mapGetters(["data", "query"])
   }
 };
 </script>

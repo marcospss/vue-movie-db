@@ -25,7 +25,6 @@ const search = {
       state.data.results = [...currentResults, ...data.results];
     },
     [SEARCH.RESET](state) {
-      state.query = null;
       state.data = defaultProps;
     }
   },
