@@ -8,7 +8,8 @@ module.exports = {
     appleMobileWebAppStatusBarStyle: "black",
     display: "standalone",
     manifestOptions: {
-      description: "The Movie Database (TMDb) is a popular, user editable database for movies and TV shows.",
+      description:
+        "The Movie Database (TMDb) is a popular, user editable database for movies and TV shows.",
       orientation: "portrait-primary",
       dir: "ltr",
       lang: "en-US",
@@ -168,6 +169,29 @@ module.exports = {
           src: "./img/icons/icon-1024x1024.png",
           type: "image/png",
           sizes: "1024x1024"
+        }
+      ]
+    },
+    workboxOptions: {
+      runtimeCaching: [
+        {
+          urlPattern: ({ url }) =>
+            url.pathname == /.*(?:googleapis|gstatic)\.com.*$/,
+          method: "GET",
+          handler: "StaleWhileRevalidate",
+          options: {
+            cacheName: "google-fonts"
+          }
+        },
+        {
+          urlPattern: ({ url }) =>
+            url.pathname ==
+            "https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css",
+          method: "GET",
+          handler: "StaleWhileRevalidate",
+          options: {
+            cacheName: "materialdesign-icons"
+          }
         }
       ]
     }
