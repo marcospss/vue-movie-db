@@ -1,5 +1,9 @@
 # vue-movie-db
 Aplicativo de Filmes e Séries de TV, desenvolvido usando o Vue.js e consumindo a API TMDB.
+
+### Demo
+[The Movie Database (TMDb](https://imdb-favorites.web.app/).
+
 ## Project setup
 ```
 npm install
